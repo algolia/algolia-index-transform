@@ -1,6 +1,6 @@
 {
   "name": "algolia-index-transform",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A selection of methods to transform an exisiting index using map, reduce or filter and push to a brand new index.",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/therealwebby/algolia-index-mapiulation"
+    "url": "https://github.com/therealwebby/algolia-index-transform"
   }
 }
