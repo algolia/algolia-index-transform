@@ -12,7 +12,7 @@ A selection of methods to transform an index using `map`, `reduce` or `filter` a
 
 ### Set Up
 
-Once installed, you will need to initalize the Algolia Index Transform as bellow. Each property is required.a
+Once installed, you will need to initalize the Algolia Index Transform as bellow. Each property is required.
 
 ```js
 const AlgoliaIndexTransform = require('algolia-index-transform');
