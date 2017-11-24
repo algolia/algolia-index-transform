@@ -187,4 +187,4 @@ class IndexManipulation {
   }
 }
 
-module.export = IndexManipulation;
+module.exports = IndexManipulation;
