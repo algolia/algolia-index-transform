@@ -1,6 +1,6 @@
 {
   "name": "algolia-index-transform",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A selection of methods to transform an exisiting index using map, reduce or filter and push to a brand new index.",
   "main": "index.js",
   "scripts": {
