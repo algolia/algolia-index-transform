@@ -49,5 +49,5 @@ algoliaIndexTransform.filter(item => item.popular === true);
 
 #### Reduce
 ```js
-algoliaIndexTransform.reduce((acc, crr) => acc + cur);
+algoliaIndexTransform.reduce((acc, cur) => acc + cur);
 ```
