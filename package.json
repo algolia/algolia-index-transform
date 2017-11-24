@@ -1,0 +1,27 @@
+{
+  "name": "algolia-index-transform",
+  "version": "1.0.0",
+  "description": "A selection of methods to transform an exisiting index using map, reduce or filter and push to a brand new index.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "author": "Alex Webb",
+  "license": "ISC",
+  "dependencies": {
+    "algoliasearch": "^3.24.6",
+    "colors": "^1.1.2",
+    "fs-extra": "^4.0.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.2",
+    "eslint": "^4.11.0",
+    "eslint-config-algolia": "^12.0.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "^1.8.2"
+  }
+}
