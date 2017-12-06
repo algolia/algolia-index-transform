@@ -50,9 +50,7 @@ class IndexManipulation {
       let records = [];
       let totalRecords = 0;
 
-      console.log(
-        'Fetching records'.bgWhite.black
-      );
+      console.log('Fetching records'.bgWhite.black);
 
       browser.on('result', response => {
         if (pageCount < 19) {
@@ -78,8 +76,7 @@ class IndexManipulation {
           JSON.stringify(records)
         );
         totalRecords = totalRecords + records.length;
-        console.log(`Finished pulling ${totalRecords} records`.green
-        );
+        console.log(`Finished pulling ${totalRecords} records`.green);
         resolve();
       });
 
@@ -96,7 +93,7 @@ class IndexManipulation {
     let totalParsedRecords = 0;
 
     console.log(
-      `${type === 'reduce' ? 'reduc' : type }ing records`.bgWhite.black
+      `${type === 'reduce' ? 'reduc' : type}ing records`.bgWhite.black
     );
 
     files.forEach(filename => {
@@ -113,7 +110,9 @@ class IndexManipulation {
         totalParsedRecords = totalParsedRecords + parsedRecords.length;
 
         console.log(
-          `${type === 'reduce' ? 'reduc' : type }ed ${totalParsedRecords} records...`.yellow
+          `${type === 'reduce' ? 'reduc' : type}ed ${
+            totalParsedRecords
+          } records...`.yellow
         );
       }
     });
@@ -124,9 +123,7 @@ class IndexManipulation {
     this.chunkCount = 0;
     this.totalRecords = 0;
 
-    console.log(
-      `Uploading records to new index`.bgWhite.black
-    );
+    console.log(`Uploading records to new index`.bgWhite.black);
 
     this._addChunkToIndex();
   }
@@ -146,9 +143,7 @@ class IndexManipulation {
         this.totalRecords = this.totalRecords + records.length;
         this.chunkCount++;
 
-        console.log(
-          `Pushed ${this.totalRecords} records...`.yellow
-        );
+        console.log(`Pushed ${this.totalRecords} records...`.yellow);
         this._addChunkToIndex();
       });
     } else {
@@ -182,6 +177,16 @@ class IndexManipulation {
     this._initClients();
     this._writeSourceChunks().then(() => {
       this._parseSourceChunks(reducingFunction, 'filter');
+      this._uploadIndex();
+    });
+  }
+
+  copy() {
+    const copyFunction = item => item;
+
+    this._initClients();
+    this._writeSourceChunks().then(() => {
+      this._parseSourceChunks('', 'slice');
       this._uploadIndex();
     });
   }
