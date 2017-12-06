@@ -1,18 +1,22 @@
 # Algolia Index Transform
 
-A selection of methods to transform an index using `map`, `reduce` or `filter` and push to a brand new index.
+A selection of methods to transform an index using `map`, `reduce` or `filter`.
+and push to a brand new index.
 
 ### Install
 
 ##### Node Using NPM
+
 `npm install algolia-index-transform`
 
 ##### Node Using yarn
+
 `yarn add algolia-index-transform`
 
 ### Set Up
 
-Once installed, you will need to initalize the Algolia Index Transform as below. Each property is required.
+Once installed, you will need to initalize the Algolia Index Transform as below.
+Each property is required.
 
 ```js
 const AlgoliaIndexTransform = require('algolia-index-transform');
@@ -29,25 +33,34 @@ const algoliaIndexTransform = new AlgoliaIndexTransform({
   // The API Key for the new index
   destinationApiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   // The new index name
-  destinationIndexName: 'a new index',
+  destinationIndexName: 'a new index'
 });
 ```
 
 ### Usage
 
+#### Copy
+
+```js
+algoliaIndexTransform.copy();
+```
+
 #### Map
+
 ```js
 algoliaIndexTransform.map(item => ({
-  id: item.id,
+  id: item.id
 }));
 ```
 
 #### Filter
+
 ```js
 algoliaIndexTransform.filter(item => item.popular === true);
 ```
 
 #### Reduce
+
 ```js
 algoliaIndexTransform.reduce((acc, cur) => acc + cur);
 ```
