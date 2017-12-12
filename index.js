@@ -44,7 +44,9 @@ class IndexManipulation {
 
   _writeSourceChunks() {
     return new Promise((resolve, reject) => {
-      const browser = this.sourceIndex.browseAll();
+      const browser = this.sourceIndex.browseAll({
+        attributesToRetrieve: '*'
+      });
       let pageCount = 0;
       let chunkCount = 0;
       let records = [];
