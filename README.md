@@ -34,8 +34,12 @@ const algoliaIndexTransform = new AlgoliaIndexTransform({
   destinationApiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   // The new index name
   destinationIndexName: 'a new index',
-  // Limit the amount of records to transfer
-  limit: 20000
+  // Optional Limit the amount of records to transfer
+  limit: 20000,
+  // Optional object containing request options for browseAll
+  requestOptions: {
+    attributesToRetrieve: ['name']
+  }
 });
 ```
 

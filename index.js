@@ -11,6 +11,7 @@ class IndexManipulation {
     this.destinationApiKey = settings.destinationApiKey;
     this.destinationIndexName = settings.destinationIndexName;
     this.limit = settings.limit;
+    this.requestOptions = settings.requestOptions || {};
 
     this._setupTempDirectories();
   }
@@ -45,9 +46,14 @@ class IndexManipulation {
 
   _writeSourceChunks() {
     return new Promise((resolve, reject) => {
-      const browser = this.sourceIndex.browseAll({
-        attributesToRetrieve: '*'
-      });
+      const browser = this.sourceIndex.browseAll(
+        Object.assign(
+          {
+            attributesToRetrieve: '*'
+          },
+          this.requestOptions
+        )
+      );
       let pageCount = 0;
       let chunkCount = 0;
       let records = [];
@@ -59,7 +65,7 @@ class IndexManipulation {
         if (pageCount < 19) {
           records = [].concat(records, response.hits);
           pageCount++;
-        } else if (totalRecords > this.limit) {
+        } else if (this.limit && totalRecords > this.limit) {
           browser.stop();
           fs.writeFileSync(
             `records-temp/chunk-${chunkCount}.json`,
