@@ -12,6 +12,7 @@ class IndexManipulation {
     this.destinationIndexName = settings.destinationIndexName;
     this.limit = settings.limit;
     this.requestOptions = settings.requestOptions || {};
+    this.headers = settings || {};
 
     this._setupTempDirectories();
   }
@@ -34,7 +35,7 @@ class IndexManipulation {
       this.sourceApiKey
     );
     Object.keys(this.headers).forEach(key => {
-      this.sourceClient.setExtraHeader(key, this.headers[key]);
+      sourceClient.setExtraHeader(key, this.headers[key]);
     });
     this.sourceIndex = sourceClient.initIndex(this.sourceIndexName);
 
@@ -43,7 +44,7 @@ class IndexManipulation {
       this.destinationApiKey
     );
     Object.keys(this.headers).forEach(key => {
-      this.destinationClient.setExtraHeader(key, this.headers[key]);
+      destinationClient.setExtraHeader(key, this.headers[key]);
     });
     this.destinationIndex = destinationClient.initIndex(
       this.destinationIndexName
@@ -134,9 +135,9 @@ class IndexManipulation {
         totalParsedRecords = totalParsedRecords + parsedRecords.length;
 
         console.log(
-          `${type === 'reduce' ? 'reduc' : type}ed ${
-            totalParsedRecords
-          } records...`.yellow
+          `${
+            type === 'reduce' ? 'reduc' : type
+          }ed ${totalParsedRecords} records...`.yellow
         );
       }
     });

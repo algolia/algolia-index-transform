@@ -1,7 +1,8 @@
 {
   "name": "algolia-index-transform",
-  "version": "1.0.4",
-  "description": "A selection of methods to transform an exisiting index using map, reduce or filter and push to a brand new index.",
+  "version": "1.0.5",
+  "description":
+    "A selection of methods to transform an exisiting index using map, reduce or filter and push to a brand new index.",
   "main": "index.js",
   "scripts": {
     "test": "npm run lint",
