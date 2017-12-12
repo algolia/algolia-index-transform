@@ -33,12 +33,18 @@ class IndexManipulation {
       this.sourceApplicationID,
       this.sourceApiKey
     );
+    Object.keys(this.headers).forEach(key => {
+      this.sourceClient.setExtraHeader(key, this.headers[key]);
+    });
     this.sourceIndex = sourceClient.initIndex(this.sourceIndexName);
 
     const destinationClient = algoliasearch(
       this.destinationApplicationID,
       this.destinationApiKey
     );
+    Object.keys(this.headers).forEach(key => {
+      this.destinationClient.setExtraHeader(key, this.headers[key]);
+    });
     this.destinationIndex = destinationClient.initIndex(
       this.destinationIndexName
     );
