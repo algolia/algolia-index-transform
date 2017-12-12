@@ -33,7 +33,9 @@ const algoliaIndexTransform = new AlgoliaIndexTransform({
   // The API Key for the new index
   destinationApiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   // The new index name
-  destinationIndexName: 'a new index'
+  destinationIndexName: 'a new index',
+  // Limit the amount of records to transfer
+  limit: 20000
 });
 ```
 

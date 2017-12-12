@@ -10,6 +10,7 @@ class IndexManipulation {
     this.destinationApplicationID = settings.destinationApplicationID;
     this.destinationApiKey = settings.destinationApiKey;
     this.destinationIndexName = settings.destinationIndexName;
+    this.limit = settings.limit;
 
     this._setupTempDirectories();
   }
@@ -58,6 +59,15 @@ class IndexManipulation {
         if (pageCount < 19) {
           records = [].concat(records, response.hits);
           pageCount++;
+        } else if (totalRecords > this.limit) {
+          browser.stop();
+          fs.writeFileSync(
+            `records-temp/chunk-${chunkCount}.json`,
+            JSON.stringify(records)
+          );
+          totalRecords = totalRecords + records.length;
+          console.log(`Finished pulling ${totalRecords} records`.green);
+          resolve();
         } else {
           records = [].concat(records, response.hits);
           fs.writeFileSync(
