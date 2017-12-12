@@ -10,6 +10,9 @@ class IndexManipulation {
     this.destinationApplicationID = settings.destinationApplicationID;
     this.destinationApiKey = settings.destinationApiKey;
     this.destinationIndexName = settings.destinationIndexName;
+    this.limit = settings.limit;
+    this.requestOptions = settings.requestOptions || {};
+    this.headers = settings || {};
 
     this._setupTempDirectories();
   }
@@ -31,12 +34,18 @@ class IndexManipulation {
       this.sourceApplicationID,
       this.sourceApiKey
     );
+    Object.keys(this.headers).forEach(key => {
+      sourceClient.setExtraHeader(key, this.headers[key]);
+    });
     this.sourceIndex = sourceClient.initIndex(this.sourceIndexName);
 
     const destinationClient = algoliasearch(
       this.destinationApplicationID,
       this.destinationApiKey
     );
+    Object.keys(this.headers).forEach(key => {
+      destinationClient.setExtraHeader(key, this.headers[key]);
+    });
     this.destinationIndex = destinationClient.initIndex(
       this.destinationIndexName
     );
@@ -44,7 +53,14 @@ class IndexManipulation {
 
   _writeSourceChunks() {
     return new Promise((resolve, reject) => {
-      const browser = this.sourceIndex.browseAll();
+      const browser = this.sourceIndex.browseAll(
+        Object.assign(
+          {
+            attributesToRetrieve: '*'
+          },
+          this.requestOptions
+        )
+      );
       let pageCount = 0;
       let chunkCount = 0;
       let records = [];
@@ -56,6 +72,15 @@ class IndexManipulation {
         if (pageCount < 19) {
           records = [].concat(records, response.hits);
           pageCount++;
+        } else if (this.limit && totalRecords > this.limit) {
+          browser.stop();
+          fs.writeFileSync(
+            `records-temp/chunk-${chunkCount}.json`,
+            JSON.stringify(records)
+          );
+          totalRecords = totalRecords + records.length;
+          console.log(`Finished pulling ${totalRecords} records`.green);
+          resolve();
         } else {
           records = [].concat(records, response.hits);
           fs.writeFileSync(
@@ -110,9 +135,9 @@ class IndexManipulation {
         totalParsedRecords = totalParsedRecords + parsedRecords.length;
 
         console.log(
-          `${type === 'reduce' ? 'reduc' : type}ed ${
-            totalParsedRecords
-          } records...`.yellow
+          `${
+            type === 'reduce' ? 'reduc' : type
+          }ed ${totalParsedRecords} records...`.yellow
         );
       }
     });
