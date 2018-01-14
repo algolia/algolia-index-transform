@@ -189,7 +189,7 @@ class IndexManipulation {
       .then(settings => {
         this.destinationIndex
           .setSettings(settings)
-          .then(() => console.log('Settings copied'))
+          .then(() => console.log('Settings copied'.green))
           .catch(error => console.error('Copy settings failed', error));
       })
       .catch(error => console.log('error'));
