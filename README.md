@@ -22,26 +22,33 @@ Each property is required.
 const AlgoliaIndexTransform = require('algolia-index-transform');
 
 const algoliaIndexTransform = new AlgoliaIndexTransform({
-  // The Application ID where the current index resides
   sourceApplicationID: 'xxxxxxxxxx',
-  // The API Key for the app where the current index resides
   sourceApiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  // The index name of the current index
   sourceIndexName: 'an existing index',
-  // The Application ID of where you would like to add the index
   destinationApplicationID: 'xxxxxxxxxx',
-  // The API Key for the new index
   destinationApiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  // The new index name
   destinationIndexName: 'a new index',
-  // Optional Limit the amount of records to transfer
   limit: 20000,
-  // Optional object containing request options for browseAll
   requestOptions: {
-    attributesToRetrieve: ['name']
-  }
+    attributesToRetrieve: ['*']
+  },
+  copySettings: false
 });
 ```
+
+### Setting properties
+
+| Paramater                   | Type      | Description                                                                                                                                                                        |
+| :-------------------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sourceApplicationID`       | `String`  | The Application ID where the current index resides                                                                                                                                 |
+| `sourceApiKey`              | `String`  | The API Key for the app where the current index resides                                                                                                                            |
+| `sourceIndexName`           | `String`  | The index name of the current index                                                                                                                                                |
+| `destinationApplicationID`  | `String`  | The Application ID of where you would like to add the index                                                                                                                        |
+| `destinationApiKey`         | `String`  | The API Key for the new index                                                                                                                                                      |
+| `destinationIndexName`      | `String`  | The new index name                                                                                                                                                                 |
+| `limit` (Optional)          | `Number`  | Optional: Limit the amount of records to transfer                                                                                                                                  |
+| `requestOptions` (Optional) | `Object`  | Optional: Object containing request options for [browseAll](https://www.algolia.com/doc/api-reference/api-methods/browse/?language=javascript#browse-compatible-search-parameters) |
+| `copySettings` (Optional)   | `Boolean` | Optional: Copy destination settings with the transformation                                                                                                                        |
 
 ### Usage
 
