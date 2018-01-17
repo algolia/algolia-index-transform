@@ -12,7 +12,8 @@ class IndexManipulation {
     this.destinationIndexName = settings.destinationIndexName;
     this.limit = settings.limit;
     this.requestOptions = settings.requestOptions || {};
-    this.headers = settings || {};
+    this.copySettings = settings.copySettings || false;
+    this.headers = settings.headers || {};
 
     this._setupTempDirectories();
   }
@@ -182,11 +183,27 @@ class IndexManipulation {
     fs.removeSync('parsed-records-temp');
   }
 
+  _copySettings() {
+    this.sourceIndex
+      .getSettings()
+      .then(settings => {
+        this.destinationIndex
+          .setSettings(settings)
+          .then(() => console.log('Settings copied'.green))
+          .catch(error => console.error('Copy settings failed', error));
+      })
+      .catch(error => console.log('error'));
+  }
+
   map(mappingFunction) {
     this._initClients();
     this._writeSourceChunks().then(() => {
       this._parseSourceChunks(mappingFunction, 'map');
       this._uploadIndex();
+
+      if (this.copySettings) {
+        this._copySettings();
+      }
     });
   }
 
@@ -196,6 +213,10 @@ class IndexManipulation {
       this._parseSourceChunks(reducingFunction, 'reduce');
       this._uploadIndex();
     });
+
+    if (this.copySettings) {
+      this._copySettings();
+    }
   }
 
   filter(reducingFunction) {
@@ -204,6 +225,10 @@ class IndexManipulation {
       this._parseSourceChunks(reducingFunction, 'filter');
       this._uploadIndex();
     });
+
+    if (this.copySettings) {
+      this._copySettings();
+    }
   }
 
   copy() {
@@ -214,6 +239,10 @@ class IndexManipulation {
       this._parseSourceChunks('', 'slice');
       this._uploadIndex();
     });
+
+    if (this.copySettings) {
+      this._copySettings();
+    }
   }
 }
 
